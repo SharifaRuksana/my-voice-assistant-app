@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 from groq import Groq 
 from html import escape
@@ -6,23 +5,20 @@ from html import escape
 api_key = st.secrets["GROQ_API_KEY"]
 client = Groq(api_key=api_key)
 
-# Load persona prompt
 with open("persona_prompt.txt", "r") as f:
     system_prompt = f.read()
 
-# Streamlit UI setup
 st.set_page_config(page_title="Personal Voice Assistant", page_icon="🗣️", layout="centered")
 st.title("Get to Know Me!")
 st.markdown("Ask me anything about my background, skills, or experiences.")
 
-# Text input
 user_input = st.text_input("What would you like to know?")
 
 if user_input:
     with st.spinner("Please wait while I gather my thoughts!"):
         try:
             response = client.chat.completions.create(
-                model="llama3-70b-8192",  # Or use "llama3-70b-8192", etc.
+                model="llama3-70b-8192",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_input}
